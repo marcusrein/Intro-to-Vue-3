@@ -6,7 +6,7 @@
 		<!-- Import Styles -->
 		<link rel="stylesheet" href="./assets/styles.css" />
 		<!-- Import Vue.js -->
-		<script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+		<script src="https://unpkg.com/vue@3.0.0-beta.12/dist/vue.global.js"></script>
 	</head>
 	<body>
 		<div id="app">
@@ -16,12 +16,11 @@
 
 			<div class="product-display">
 				<div class="product-container">
-					<div class="product-image"></div>
-						<img
-							v-bind:src="image"
-							:class="{ out-of-stock-img: inStock"
-						/>
+					<div class="product-image">
+            <img :class="{ 'out-of-stock-img': !inStock }" v-bind:src="image">
+						</p>
 					</div>
+
 					<div class="product-info">
 						<h1>{{ product }}</h1>
 						<p v-if="inStock">In Stock</p>
@@ -31,20 +30,14 @@
 						</ul>
 
 						<div
+              class="color-circle"
+              :style="{ backgroundColor: variant.color }"
 							v-for="variant in variants"
 							:key="variant.id"
 							@mouseover="updateImage(variant.image)"
-							class="color-circle"
-							:style="{ backgroundColor: variant.color }"
 						>
-							{{ variant.color }}
 						</div>
-						<button
-							class="button"
-							:class="{ disabledButton: !inStock }"
-							:disabled="!inStock"
-							@click="addToCart"
-						>
+						<button class="button" @click="addToCart" :class= "{ disabledButton: !inStock }" :disabled="!inStock">
 							Add to Cart
 						</button>
 					</div>
